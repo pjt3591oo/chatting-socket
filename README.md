@@ -11,4 +11,4 @@ $ npm install
 $ node ./bin/www
 ```
 
-http://locslhost:3000으로 [접속](http://locslhost:3000) 
+http://localhost:3000으로 [접속](http://localhost:3000) 
