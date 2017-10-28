@@ -1,0 +1,33 @@
+extends layout
+
+block content
+
+  link(rel='stylesheet', href='/stylesheets/channelRoom.css')
+
+  input#name(type="text" placeholder="이름")
+
+  ul#chat-list
+
+    li 1번 채널
+    li 2번 채널
+    li 3번 채널
+    li 4번 채널
+    li 5번 채널
+    li 6번 채널
+    li 7번 채널
+
+
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+  script.
+      $(document).ready(function(){
+        $('#chat-list li').click(function(){
+            let index = $('#chat-list li').index(this);
+            let name = $('#name').val();
+            if(name ){
+              location.href =`/chatting?room=${index}&name=${name}`;
+            }else{
+                alert('이름을 입력해 주세요.');
+            }
+        })
+
+      })

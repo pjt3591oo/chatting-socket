@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  .container
+    h3 #{name}
+    input#r(type="hidden" value=room)
+    input#n(type="hidden" value=name)
+
+    .form-group
+      label.col-sm-2.control-label(for='name') Reveiver
+      .col-sm-10
+        input#reveiver.form-control(type='text', placeholder='Reveiver')
+    .form-group
+      label.col-sm-2.control-label(for='msg') Message
+      .col-sm-10
+        input#msg.form-control(type='text', placeholder='Message')
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        button.btn.btn-default(type='submit') Send
+    ul#chat
+
+
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+  script(src='/socket.io/socket.io.js')
+  script.
+      var name = $('#n').val();
+      var room = $('#r').val();
+      var url ='/chat?room=' +room+ '&name=' + name;
+      var chat = io(url);
+
+      $('button.btn.btn-default').click(function(){
+          let message = $('#msg').val(),
+              receiver = $('#reveiver').val();
+
+          chat.emit('/message', {message: message, to: receiver, from: name, room: room});
+      })
+
+      chat.on('display', function(data){
+          let sender = data[''];
+          console.log(data);
+          $('ul#chat').append(`<li>${data['message']}</li>`);
+      });
+
